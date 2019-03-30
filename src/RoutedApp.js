@@ -2,6 +2,7 @@ import React from "react";
 import './App.scss';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import SectionView from './components/SectionView';
+import SectionCard from './components/SectionCard';
 
 import metadata from './metadata.json';
 
@@ -18,7 +19,7 @@ function RoutedApp() {
     <Router>
       <div className="modern-health-app">
 
-        <Route exact path="/" component={MainMenu} />
+        <Route exact path="/" render={props => <Program {...props} data={metadata.programs["1"]} />} />
         <Route 
           exact path="/:section" 
           render={props => <SectionView {...props} data={sectionsData} currentIndex={1} onReturn={() => {}} />} 
@@ -37,6 +38,29 @@ function MainMenu() {
     <Link to={`/${getUrlFromSectionName(section1Data.name)}`} >
       {section1Data.name}
     </Link>
+  );
+}
+
+function Program(props) {
+  return (
+    <div className="program-preview">
+      <h1>{props.data.name}</h1>
+
+      <a href="#">Learn More</a>
+
+      <div className="sections">
+
+        {props.data.sections.map((section, sectionIndex) => {
+          return (
+            <Link to={`/${getUrlFromSectionName(section1Data.name)}/${sectionIndex}`} >
+              <SectionCard data={section} />
+            </Link>
+          );
+          
+        })}
+
+      </div>
+    </div>
   );
 }
 
