@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from "react-router-dom";
+
 import Section from './Section.jsx';
 
 class SectionViewer extends React.Component {
@@ -13,7 +15,7 @@ class SectionViewer extends React.Component {
 	handleBackClick = () =>  {
 		// Check index 0 and use callback
 		if (this.state.currentIndex === 0) {
-			this.props.onReturn();
+			window.location.href = "/";
 			return;
 		}
 
@@ -27,7 +29,7 @@ class SectionViewer extends React.Component {
 	handleContinueClick = () => {
 		// Check index length and use callback
 		if (this.state.currentIndex === this.props.data.length - 1) {
-			this.props.onReturn();
+			window.location.href = "/";
 			return;
 		}
 
@@ -39,14 +41,30 @@ class SectionViewer extends React.Component {
 	}
 
 	render() {
+		/*
+			<Section data={this.props.data[this.state.currentIndex]} />
+					<button onClick={this.handleBackClick}>Back</button>
+					<button onClick={this.handleContinueClick}>Continue</button>
+		*/
+		
+		const index = parseInt(this.props.match.params.index || 0, 10);
+
+		const backLink = index === 0
+			? "/"
+			: `/${this.props.match.params.section}/${index - 1}`;
+
+		const continueLink = index === this.props.data.length - 1
+			? "/"
+			: `/${this.props.match.params.section}/${index + 1}`;
+
 		return (
 			<div className="section-view">
 
-				<Section data={this.props.data[this.state.currentIndex]} />
+				<Section {...this.props} data={this.props.data[index]} />
 
 				<footer>
-					<button onClick={this.handleBackClick}>Back</button>
-					<button onClick={this.handleContinueClick}>Continue</button>
+					<Link to={backLink}>Back</Link>
+					<Link to={continueLink}>Continue</Link>
 				</footer>
 
 			</div>

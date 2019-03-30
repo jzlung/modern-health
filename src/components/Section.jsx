@@ -4,6 +4,7 @@ import Activity from './Activity.jsx'
 // TODO: put content in metadata.json
 
 function Section({data}) {
+	console.log(data);
 	return (
 		<section className="section">
 
