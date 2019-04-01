@@ -1,8 +1,8 @@
 import React from "react";
-import './App.scss';
+import './styles/App.scss';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import SectionView from './components/SectionView';
-import SectionCard from './components/SectionCard';
+import SectionView from './js/components/SectionView';
+import SectionCard from './js/components/SectionCard';
 
 import metadata from './metadata.json';
 

@@ -83,7 +83,24 @@
   }
 }
 
+.question-activity__options {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px 0px;
+};
 
+.question-activity__option {
+  width: auto;
+  padding: 5px;
+  margin: 5px 10px 5px 0px;
+  border-radius: 5px;
+  background: aliceblue;
+  outline: 0;
+
+  &.selected {
+    background: cyan;
+  }
+}
 
 
 

@@ -1,102 +1,69 @@
-import React, { Component } from 'react';
-import './App.scss';
-
+import React from "react";
+import './styles/App.scss';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import SectionView from './components/SectionView';
+import SectionCard from './components/SectionCard';
 import metadata from './metadata.json';
-import ProgramPreview from './components/ProgramPreview.jsx';
-import SectionView from './components/SectionView.jsx';
 
-class App extends Component {
+const sectionsData = metadata.programs["1"].sections;
+const section1Data = metadata.programs["1"].sections[0];
+console.log(section1Data);
 
-  constructor(props) {
-    super(props);
-    console.log(metadata);
-    this.state = {
-      // Normally this might be an AJAX call in componentDidMount, but data is local in this app
-      data: metadata,
-      activeView: {
-        type: "section",
-        programId: "1",
-        sectionIndex: 2, 
-      },
-    };
-  }
-  
-  renderProgramPreviews = () => {
-    if (this.state.data.programs) {
+// TODO: move to helper file, and also sanitize special characters
+const getUrlFromSectionName = name => {
+  return name.toLowerCase().replace(' ', '-');
+};
 
-      const programs = Object.keys(this.state.data.programs)
-        // .map(key => this.state.data.programs[key]);
-        .map(key => (
-          <ProgramPreview 
-            data={this.state.data.programs[key]} 
-            programId={key} 
-            onSectionClick={this.handleSectionClick} 
-          />
-        ))
+function RoutedApp() {
 
-      return (
-        <div className="program-previews">
-          {programs}
-        </div>
-      );
-    }
-  };
-
-  renderMainApp = () => {
-    return (
-      <div className="container">
-        <header>
-          Self Help Programs Overview
-        </header>
-
-        {this.renderProgramPreviews()}
-
-        <pre>
-          {JSON.stringify(metadata, null, 2)}
-        </pre>
-      </div>
-    );
-  }
-
-  handleReturn = () => {
-    this.setState({
-      activeView: { type: "main" },
-    })
-  }
-
-  handleSectionClick = (programId, sectionIndex) => {
-    this.setState({
-      activeView: { 
-        type: "section",
-        programId: programId,
-        sectionIndex: sectionIndex,
-      },
-    })
-  }
-
-  renderSection = (programId, sectionIndex) => {
-    return (
-      <SectionView 
-        data={this.state.data.programs[programId].sections} 
-        onReturn={this.handleReturn}
-        index={sectionIndex}
-      />
-    );
-  }
-
-  render() {
-    const { programId, sectionIndex } = this.state.activeView;
-    return (
+  return (
+    <Router>
       <div className="modern-health-app">
 
-        {this.state.activeView.type === "main"
-          ? this.renderMainApp()
-          : this.renderSection(programId, sectionIndex)
-        }
-
+        <Route exact path="/" render={props => <Program {...props} data={metadata.programs["1"]} />} />
+        <Route 
+          exact path="/:section" 
+          render={props => <SectionView {...props} data={section1Data} />} 
+        />
+        <Route 
+          path="/:section/:index"
+          render={props => <SectionView {...props} data={section1Data} programKey="1" />} 
+        />
       </div>
-    );
-  }
+    </Router>
+  );
 }
 
-export default App;
+// function MainMenu() {
+//   return (
+//     <Link to={`/${getUrlFromSectionName(section1Data.name)}`} >
+//       {section1Data.name}
+//     </Link>
+//   );
+// }
+
+function Program(props) {
+  return (
+    <div className="program-preview">
+      <h1>{props.data.name}</h1>
+
+      <a href="#">Learn More</a>
+
+      <div className="sections">
+
+        {props.data.sections.map((section, sectionIndex) => {
+          return (
+            <Link to={`/${getUrlFromSectionName(section1Data.name)}/${sectionIndex}`} >
+              <SectionCard data={section} />
+            </Link>
+          );
+          
+        })}
+
+      </div>
+    </div>
+  );
+}
+
+
+export default RoutedApp;

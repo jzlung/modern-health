@@ -7,7 +7,7 @@ function SectionCard(props) {
 			<Card>
 
 				<div className="section-card__top">
-					<img src={props.data.image} className="section-card__image" />
+					<img src={props.data.image} className="section-card__image" alt="props.data.name" />
 				</div>
 
 				<div className="section-card__bottom">
