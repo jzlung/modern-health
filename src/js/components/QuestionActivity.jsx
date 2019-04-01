@@ -1,10 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-class QuestionActivity extends React.Component {
+const mapStateToProps = (state, ownProps) => {
+	const { programId, sectionName, activityIndex } = ownProps;
+
+	if (!state.userActivity[programId] || 
+			!state.userActivity[programId][sectionName] || 
+			!state.userActivity[programId][sectionName][activityIndex]) {
+		return { selected: Array.from({ length: ownProps.data.options.length }).map(x => false) }
+	}
+	return {
+		selected: state.userActivity[programId][sectionName][activityIndex].answers,
+	};
+};
+
+class ConnectedQuestionActivity extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selected: Array.from({ length: props.data.options.length }).map(x => false),
+			selected: props.selected,
 		};
 	}
 
@@ -54,5 +68,7 @@ class QuestionActivity extends React.Component {
 		);
 	}
 }
+
+const QuestionActivity = connect(mapStateToProps)(ConnectedQuestionActivity);
 
 export default QuestionActivity;

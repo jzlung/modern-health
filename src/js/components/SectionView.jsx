@@ -19,6 +19,8 @@ function SectionView(props) {
 		? "/"
 		: `${urlPrefix}${activityIndex - 1}`;
 
+	// Cool future work may be disabling Continue button if activity is 
+	// Question type until they select something
 	const continueLink = activityIndex === data.activities.length - 1
 		? "/"
 		: `${urlPrefix}${activityIndex + 1}`;

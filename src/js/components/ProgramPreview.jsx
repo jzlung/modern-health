@@ -21,7 +21,7 @@ function ProgramPreview(props) {
 					};
 
 					return (
-						<SectionCard data={section} onSectionClick={onClick} />
+						<SectionCard data={section} onSectionClick={onClick} programId={programId} />
 					);
 					
 				})}

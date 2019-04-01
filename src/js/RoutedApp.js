@@ -73,7 +73,7 @@ function Program(props) {
               to={`${link}/0`} 
               key={link}
             >
-              <SectionCard data={section} />
+              <SectionCard data={section} programId={props.programId} />
             </Link>
           );
           

@@ -5,12 +5,9 @@ import TextActivity from './TextActivity.jsx'
 import QuestionActivity from './QuestionActivity.jsx'
 import logActivity from '../actions/index';
 
-// TODO: put content in metadata.json
-
 const mapDispatchToProps = dispatch => {
 	return {
 		logActivity: (programId, sectionName, activityIndex, extra) => {
-			console.log("hola", programId, sectionName, activityIndex, extra);
 			dispatch(logActivity({
 				programId,
 				sectionName,
@@ -22,12 +19,14 @@ const mapDispatchToProps = dispatch => {
 };
 
 function ConnectedSection(props) {
-	const { data, logActivity } = props;
+	const { data, logActivity, programId, sectionName, activityIndex } = props;
 
 	const activityProps = {
 		data,
+		programId,
+		sectionName,
+		activityIndex,
 		onAction: (extra) => {
-			const { programId, sectionName, activityIndex } = props;
 			logActivity(programId, sectionName, activityIndex, extra);
 		},
 	};
