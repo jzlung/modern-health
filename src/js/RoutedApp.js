@@ -3,6 +3,7 @@ import '../styles/App.scss';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import SectionView from './components/SectionView';
 import SectionCard from './components/SectionCard';
+import Modal from 'react-modal';
 import metadata from '../metadata.json';
 
 // TODO: move to helper file, and also sanitize special characters
@@ -30,7 +31,7 @@ function RoutedApp() {
 
   return (
     <Router>
-      <div className="modern-health-app">
+      <div className="modern-health-app" id="app">
 
         <Route exact path="/" component={MainMenu} />
         <Route 
@@ -46,22 +47,41 @@ function RoutedApp() {
   );
 }
 
+Modal.setAppElement('#root');
+
 function MainMenu() {
+  const [ activeModalId, setActiveModalId ] = React.useState(null);
+
   return (
-    <div>
+    <div className="main-menu">
       {Object.keys(metadata.programs).map(programId => (
-        <Program data={metadata.programs[programId]} key={programId} programId={programId} />
+        <section className="program-section">
+          <Modal 
+            isOpen={activeModalId === programId}
+            onRequestClose={() => setActiveModalId(null)}
+          >
+            {metadata.programs[programId].description}
+          </Modal>
+          <Program 
+            data={metadata.programs[programId]} 
+            key={programId} 
+            programId={programId} 
+            triggerModal={() => setActiveModalId(programId)} 
+          />
+        </section>
       ))}
     </div>
   );
 }
 
 function Program(props) {
+  // TODO: style the button as link
+
   return (
     <div className="program-preview">
       <h1>{props.data.name}</h1>
 
-      <a href="/">Learn More</a>
+      <button onClick={props.triggerModal}>Learn More</button>
 
       <div className="sections">
 
