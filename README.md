@@ -25,3 +25,4 @@ Run with `npm start`
 * More fleshed out UI, like a side nav showing where you are, maybe a Home link between Back and Continue whilst traversing sections
 * Support more activity types, or different type of activities
 * While I've tried to make it as responsive as possible, some CSS values are hardcoded.
+* Other assorted comments in code point to optimizations

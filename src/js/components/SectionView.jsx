@@ -4,11 +4,6 @@ import { Link } from "react-router-dom";
 import Section from './Section.jsx';
 
 function SectionView(props) {
-	/*
-		<Section data={this.props.data[this.state.currentIndex]} />
-				<button onClick={this.handleBackClick}>Back</button>
-				<button onClick={this.handleContinueClick}>Continue</button>
-	*/
 
 	const { match, data, programId } = props;
 	const urlPrefix = `/${match.params.programId}/${match.params.section}/`;
@@ -25,8 +20,6 @@ function SectionView(props) {
 		? "/"
 		: `${urlPrefix}${activityIndex + 1}`;
 
-
-	// TODO: is footer the right role?
 	return (
 		<div className="section-view">
 
