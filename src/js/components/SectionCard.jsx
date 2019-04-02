@@ -9,7 +9,6 @@ const mapStateToProps = (state, ownProps) => {
 	const { programId, data } = ownProps;
 
 	if (!state.userActivity[programId] || !state.userActivity[programId][data.name]) {
-		// console.log(!state.userActivity[programId], !state.userActivity[programId][data.name]);
 		return { sectionComplete: false }
 	}
 
@@ -25,20 +24,19 @@ const mapStateToProps = (state, ownProps) => {
 
 function ConnectedSectionCard(props) {
 	return (
-		<button onClick={props.onSectionClick}>
-			<Card>
-				<img src={props.sectionComplete ? checkedUrl : emptyUrl} className="completion-badge" alt={`This section is ${true ? "" : "not "}completed`} />
+		<Card>
+			<img src={props.sectionComplete ? checkedUrl : emptyUrl} className="completion-badge" alt={`This section is ${true ? "" : "not "}completed`} />
 
-				<div className="section-card__top">
-					<img src={props.data.image} className="section-card__image" alt="props.data.name" />
-				</div>
+			<div className="section-card__top">
+				<img src={props.data.image} className="section-card__image" alt="props.data.name" />
+			</div>
 
-				<div className="section-card__bottom">
-					{props.data.name}
-				</div>
+			<div className="section-card__bottom">
+				<p className="section-part">{`Part ${props.data.order}`}</p>
+				<p className="section-name">{props.data.name}</p>
+			</div>
 
-			</Card>
-		</button>
+		</Card>
 	);
 }
 
