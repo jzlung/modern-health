@@ -1,6 +1,7 @@
 # Jerry Lung <-> Modern Health Coding Challenge
 
-Hey Modern Health team!
+Hey Modern Health team! 
+Run with `npm start`
 
 ## Built With
 - create-react-app
@@ -12,6 +13,7 @@ Hey Modern Health team!
 * Answering a question activity marks it as done, whereas simply visiting a text activity does so.
 * A section is marked complete (green checkmark in the main menu) when all of its activities are done.
 * Answers to a question activity are saved.
+* State persisted to localStorage.
 
 ## Improvements Needed
 * I skipped on Typescript to save time, but that would have been preferred.
