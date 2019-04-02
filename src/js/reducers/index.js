@@ -1,43 +1,29 @@
 import { LOG_ACTIVITY } from "../constants/action-types";
 
 /*
-TODO: write down data format
+Data Format:
 
 userActivity: {
 	
 	// Programs
 	"1": {
 		// Sections
-		sections: [
-			// Section
 			{
 				name: "Mindfulness",
 
 				// Activities
 				activities: [
-					// Activity
-					{
-						type: "Text",
-						state: "Complete",
-					},
-					{
-						type: "Question",
-						state: "Complete",
-					},
-					{
-						type: "Question",
-						state: "Incomplete",
-					},
+					true,
+					false,
+					[false, true, false],
 				],
 			}
-		],
 	},
 
 	"2": {
-	
-	,}
+		...
+	 },
 }
-
 
 */
 
@@ -47,7 +33,6 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
 	if (action.type === LOG_ACTIVITY) {
-		console.log(action);
 
 		const result = Object.assign({}, state.userActivity);
 		const { programId, sectionName, activityIndex, extra } = action.payload;
@@ -67,8 +52,6 @@ function rootReducer(state = initialState, action) {
 			}
 			program[sectionName][activityIndex] = value;
 		}
-
-		console.log(result);
 
 		return Object.assign({}, state, {
 			userActivity: result,

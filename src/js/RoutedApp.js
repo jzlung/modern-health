@@ -1,27 +1,19 @@
 import React from "react";
 import '../styles/App.scss';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Program from './components/Program';
 import SectionView from './components/SectionView';
-import SectionCard from './components/SectionCard';
 import Modal from 'react-modal';
 import metadata from '../metadata.json';
+import { getSectionDataFromHash } from './helpers';
 
-// TODO: move to helper file, and also sanitize special characters
-const getHashFromSectionName = name => {
-  return name.toLowerCase().split('').filter(char => /[a-z ]/.test(char)).join('').replace(/ /g, '-');
-};
-
-const getSectionDataFromHash = (program, hash) => {
-  // Todo Hardcoded
-  return metadata.programs[program].sections.find(sectionData => getHashFromSectionName(sectionData.name) === hash);
-};
 
 const renderSection = (props) => {
   const params = props.match.params;
   return (
     <SectionView 
       {...props} 
-      data={getSectionDataFromHash(params.programId, props.match.params.section)} 
+      data={getSectionDataFromHash(params.programId, props.match.params.section, metadata)} 
       programId={params.programId} 
     />
   );
@@ -36,7 +28,7 @@ function RoutedApp() {
         <Route exact path="/" component={MainMenu} />
         <Route 
           exact path="/:programId/:section" 
-          render={renderSection} 
+          render={(renderSection)} 
         />
         <Route 
           path="/:programId/:section/:index"
@@ -47,10 +39,23 @@ function RoutedApp() {
   );
 }
 
-Modal.setAppElement('#root');
-
 function MainMenu() {
   const [ activeModalId, setActiveModalId ] = React.useState(null);
+  const modalStyle = {
+    overlay: {
+      backgroundColor: 'rgba(128, 128, 128, 0.8)',
+    },
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      height: "30%",
+      width: "50%",
+    },
+  };
 
   return (
     <div className="main-menu">
@@ -59,7 +64,9 @@ function MainMenu() {
           <Modal 
             isOpen={activeModalId === programId}
             onRequestClose={() => setActiveModalId(null)}
+            style={modalStyle}
           >
+            <h1>{metadata.programs[programId].name}</h1>
             {metadata.programs[programId].description}
           </Modal>
           <Program 
@@ -74,35 +81,7 @@ function MainMenu() {
   );
 }
 
-function Program(props) {
-  // TODO: style the button as link
 
-  return (
-    <div className="program-preview">
-      <h1>{props.data.name}</h1>
-
-      <button onClick={props.triggerModal}>Learn More</button>
-
-      <div className="sections">
-
-        {props.data.sections.map(section => {
-          const hashedSectionName = getHashFromSectionName(section.name);
-          const link = `/${props.programId}/${hashedSectionName}`;
-          return (
-            <Link 
-              to={`${link}/0`} 
-              key={link}
-            >
-              <SectionCard data={section} programId={props.programId} />
-            </Link>
-          );
-          
-        })}
-
-      </div>
-    </div>
-  );
-}
-
+Modal.setAppElement('#root');
 
 export default RoutedApp;

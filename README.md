@@ -1,68 +1,25 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Jerry Lung <-> Modern Health Coding Challenge
 
-## Available Scripts
+Hey Modern Health team!
 
-In the project directory, you can run:
+## Built With
+- create-react-app
+- React -- great for mapping data to UI
+- React Router -- being that this is a single page app with no server, I needed some way to interface with browser history (so Back and Forward work)
+- Redux -- helps maintain a global userActivity state that can be set and read from any component
 
-### `npm start`
+## Interaction
+* Answering a question activity marks it as done, whereas simply visiting a text activity does so.
+* A section is marked complete (green checkmark in the main menu) when all of its activities are done.
+* Answers to a question activity are saved.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Improvements Needed
+* I skipped on Typescript to save time, but that would have been preferred.
+* Testing -- everything should be unit tested and unfortunately I skipped on this due to time. But each component has been broken down so they should be easier to test. 
+* As is, this tool assumes that the content will not change often, which would affect the user state. Ideal scenario would be to add id's to every data piece (e.g. activities) and use that in the userActivity state, which would be more future proof. 
+* In hindsight, for the userActivity state, simply saving the whole url as the key instead of a complex nested structure mirroring the data may have been easier...
+* More thorough documentation.
+* Accessibility: right now, keyboard nav is not great, and I've missed other a11y details. 
+* More fleshed out UI, like a side nav showing where you are, maybe a Home link between Back and Continue whilst traversing sections
+* Support more activity types, or different type of activities
+* While I've tried to make it as responsive as possible, some CSS values are hardcoded.
